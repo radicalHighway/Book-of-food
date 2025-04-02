@@ -1,18 +1,8 @@
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import axiosInstance from "../shared/lib/axiosInstance";
 
-export default function RecieptCard({ user, reciept }) {
-  const favouriteHandler = async () => {
-    try {
-      await axiosInstance.post(
-        `favorites/reciept/${reciept.id}/users/${user.data.id}/likes`
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+export default function FavoriteCard({ reciept }) {
   return (
     <Card style={{ width: "18rem", position: "relative" }}>
       <Card.Img variant="top" src={reciept.url} />
@@ -22,7 +12,7 @@ export default function RecieptCard({ user, reciept }) {
       </Card.Body>
 
       <Button
-        onClick={favouriteHandler}
+        //   onClick={favouriteHandler}
         variant="outline-danger"
         style={{
           position: "absolute",

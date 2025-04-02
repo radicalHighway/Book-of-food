@@ -1,47 +1,51 @@
 const favoriteRoutes = require('express').Router();
 
 const { Favourite, User, Reciept } = require('../db/models');
+const { verifyAccessToken } = require('../middlewares/verifyToken');
 
-favoriteRoutes.post('/:reciept_id', async (req, res) => {
-  const { reciept_id } = req.params;
-  const user_id = 1;
+favoriteRoutes.post(
+  '/reciept/:reciept_id/users/:user_id/likes',
+  verifyAccessToken,
+  async (req, res) => {
+    const { reciept_id } = req.params;
+    const { id: user_id } = res.locals.user;
+
+    const [like, created] = await Favourite.findOrCreate({
+      where: { user_id, reciept_id },
+    });
+    if (created) {
+      res.status(201).json(like);
+    } else {
+      await like.destroy();
+      res.status(201).json(like);
+    }
+  },
+);
+
+favoriteRoutes.get('/users/:user_id/likes', verifyAccessToken, async (req, res) => {
   try {
-    const existingFavorite = await Favourite.findOne({
-      where: {
-        user_id,
-        reciept_id,
-      },
+    const { id: user_id } = res.locals.user;
+
+    const user = await User.findByPk(user_id, {
+      include: [
+        {
+          model: Reciept,
+          as: 'likedRecept',
+          through: {
+            attributes: [],
+          },
+        },
+      ],
     });
 
-    if (existingFavorite) {
-      return res.status(400).json({ message: 'Рецепт уже в избранном' });
+    if (!user) {
+      return res.status(404).json({ message: 'Пользователь не найден' });
     }
 
-    // Создаем новую запись в избранном
-    const newFavorite = await Favourite.create({
-      user_id,
-      reciept_id,
-    });
-
-    res.status(201).json({
-      success: true,
-      favorite: newFavorite,
-    });
+    res.status(200).json(user.likedRecept);
   } catch (error) {
-    console.error('Ошибка при добавлении в избранное:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Произошла ошибка при добавлении в избранное',
-    });
+    console.error('Ошибка:', error);
+    res.status(500).json({ message: 'Ошибка сервера' });
   }
 });
-
-favoriteRoutes.get('/users/:userId/likes/tweets', async (req, res) => {
-  const { userId } = req.params;
-  const user = await User.findByPk(userId, {
-    include: 'likedRecept',
-  });
-  res.status(200).json(user.likedTweets);
-});
-
 module.exports = favoriteRoutes;
