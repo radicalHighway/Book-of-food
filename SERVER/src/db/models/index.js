@@ -2,12 +2,13 @@
 
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../../')})
+
 const Sequelize = require('sequelize');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env')})
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(path.join(__dirname, '../config/config.json'))[env];
+const config = require(__dirname + '/../config/database.js')[env];
 const db = {};
 
 let sequelize;
