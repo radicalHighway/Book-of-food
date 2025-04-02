@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const corsConfig = require('../configs/cors.config');
 const cors = require('cors');
-const recieptRouter = require('./routes/recipt.routes');
+const recieptRouter = require('./routes/reciept.router');
 
 const app = express();
 
