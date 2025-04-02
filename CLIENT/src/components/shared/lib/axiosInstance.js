@@ -1,18 +1,23 @@
 import axios from "axios";
+
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API,
   withCredentials: true,
 });
+
 let accessToken = "";
+
 function setAccessToken(newToken) {
   accessToken = newToken;
 }
+
 axiosInstance.interceptors.request.use((config) => {
   if (!config.headers.Authorization) {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
   return config;
 });
+
 axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -27,5 +32,7 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 export { setAccessToken };
+
 export default axiosInstance;
