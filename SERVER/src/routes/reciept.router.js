@@ -20,5 +20,5 @@ recieptRouter.route('/').get(async (req, res) => {
 });
 
 recieptRouter.get('/:id', RecieptController.getOne);
-recieptRouter.get('/:id', RecieptController.getFavs);
+
 module.exports = recieptRouter
