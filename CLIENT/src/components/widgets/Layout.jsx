@@ -4,11 +4,11 @@ import Container from 'react-bootstrap/esm/Container'
 import { Outlet } from 'react-router'
 import NavigationPanel from './NavigationPanel'
 
-export default function Layout() {
+export default function Layout({ handleLogout, user }) {
   return (
     <Container>
       
-          <NavigationPanel />
+          <NavigationPanel user={user} handleLogout={handleLogout}/>
           <Outlet />
        
       </Container>

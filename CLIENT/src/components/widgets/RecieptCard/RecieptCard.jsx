@@ -3,11 +3,22 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from "react-router"
 
-
+import { useState, useEffect } from "react-router"
 
 export default function RecieptCard({reciept}) {
+const [ingridients, setIngidients] = useState([])
 
-  
+console.log('reciept.ingridients',ingridients);
+
+useEffect(() => {
+  if (reciept.ingridients) {
+    setIngidients(reciept.ingridients.split(','));
+  }
+}, [reciept.ingridients]); 
+
+
+
+
 
   return (
     <>
@@ -17,6 +28,12 @@ export default function RecieptCard({reciept}) {
         <Card.Title>{reciept.name} </Card.Title>
         <Button as={Link} to={`/${reciept.id}`} variant="primary" >Go somewhere</Button>
       </Card.Body>
+      <Card.Text>
+      Время приготовления: {reciept.time} минут
+    </Card.Text>
+    <Card.Text>
+      Количество ингредиентов: {ingridients.length}
+    </Card.Text>
 
       <Button
         variant="outline-danger"
