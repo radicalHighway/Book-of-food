@@ -1,6 +1,8 @@
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Link } from "react-router"
+
 
 
 export default function RecieptCard({reciept}) {
@@ -8,11 +10,12 @@ export default function RecieptCard({reciept}) {
   
 
   return (
+    <>
     <Card style={{ width: '18rem', position: 'relative' }}>
       <Card.Img variant="top" src={reciept.url} />
       <Card.Body>
-        <Card.Title>{reciept.name}</Card.Title>
-        <Button variant="primary">Go somewhere</Button>
+        <Card.Title>{reciept.name} </Card.Title>
+        <Button as={Link} to={`/${reciept.id}`} variant="primary" >Go somewhere</Button>
       </Card.Body>
 
       <Button
@@ -29,6 +32,6 @@ export default function RecieptCard({reciept}) {
         ❤️
       </Button>
     </Card>
-
+    </>
   )
 }
