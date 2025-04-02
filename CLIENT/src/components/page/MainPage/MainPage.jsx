@@ -1,8 +1,9 @@
 
-import RecieptCard from '../widgets/RecieptCard'
-
+import RecieptCard from '../../widgets/RecieptCard/RecieptCard'
+// import './MainPage.css'; 
 import React, { useEffect, useState } from 'react'
-import axiosInstance from '../shared/lib/axiosInstance';
+import axiosInstance from '../../shared/lib/axiosInstance';
+import { Row, Col } from 'react-bootstrap';
 
 
 export default function MainPage() {
@@ -20,8 +21,13 @@ export default function MainPage() {
   }, [])
 
   return (
-    <>
-   {reciepts.map((el) =><RecieptCard reciept={el} key={el.id}/>)}
-   </>
+    <Row className="g-4">
+         {reciepts.map((el) => (
+           <Col xs={12} md={6} lg={4} key={el.id}>
+             <RecieptCard reciept={el} />
+           </Col>
+         ))}
+       </Row>
+
   )
 }
