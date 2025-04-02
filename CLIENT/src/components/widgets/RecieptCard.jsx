@@ -7,7 +7,7 @@ export default function RecieptCard({reciept}) {
 
   
 
-  return (
+  return ( 
     <Card style={{ width: '18rem', position: 'relative' }}>
       <Card.Img variant="top" src={reciept.url} />
       <Card.Body>
