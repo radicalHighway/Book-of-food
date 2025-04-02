@@ -1,8 +1,9 @@
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import './RecieptCard.css'
-import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom"
+
+import { useState, useEffect } from "react"
 
 export default function RecieptCard({reciept}) {
 const [ingridients, setIngidients] = useState([])
@@ -20,11 +21,12 @@ useEffect(() => {
 
 
   return (
+    <>
     <Card style={{ width: '18rem', position: 'relative' }}>
       <Card.Img variant="top" src={reciept.url} />
       <Card.Body>
-        <Card.Title>{reciept.name}</Card.Title>
-        <Button variant="outline-success">Go somewhere</Button>
+        <Card.Title>{reciept.name} </Card.Title>
+        <Button as={Link} to={`/${reciept.id}`} variant="primary" >Go somewhere</Button>
       </Card.Body>
       <Card.Text>
       Время приготовления: {reciept.time} минут
@@ -47,6 +49,6 @@ useEffect(() => {
         ❤️
       </Button>
     </Card>
-
+    </>
   )
 }

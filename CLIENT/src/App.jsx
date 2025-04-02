@@ -4,7 +4,8 @@ import Layout from "./components/widgets/Layout";
 import LoginPage from "./components/page/LoginPage";
 import SignInPage from "./components/page/SigninPage";
 import { useEffect, useState } from "react";
-import axiosInstance, { setAccessToken } from "./components/shared/lib/axiosInstance";
+import axiosInstance, { setAccessToken } from "./components/shared/lib/axiosInstance";import OneRecieptCard from "./components/widgets/OneRecieptCard"
+
 
 function App() {
   const [user, setUser] = useState({ status: "logging", data: null });
@@ -34,6 +35,7 @@ function App() {
       <Route path='/' element={<MainPage />} />
       <Route path="/signup" element={<LoginPage setUser={setUser} />} />
       <Route path="/signin" element={<SignInPage setUser={setUser} />} />
+      <Route path='/:id' element={<OneRecieptCard />} />
       </Route>
     </Routes>
   );
