@@ -1,9 +1,9 @@
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import { Link } from "react-router"
+import { Link } from "react-router-dom"
 
-import { useState, useEffect } from "react-router"
+import { useState, useEffect } from "react"
 
 export default function RecieptCard({reciept}) {
 const [ingridients, setIngidients] = useState([])
