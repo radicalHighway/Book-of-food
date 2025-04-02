@@ -1,19 +1,37 @@
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-
+import './RecieptCard.css'
+import { useEffect, useState } from 'react';
 
 export default function RecieptCard({reciept}) {
+const [ingridients, setIngidients] = useState([])
 
-  
+console.log('reciept.ingridients',ingridients);
+
+useEffect(() => {
+  if (reciept.ingridients) {
+    setIngidients(reciept.ingridients.split(','));
+  }
+}, [reciept.ingridients]); 
+
+
+
+
 
   return (
     <Card style={{ width: '18rem', position: 'relative' }}>
       <Card.Img variant="top" src={reciept.url} />
       <Card.Body>
         <Card.Title>{reciept.name}</Card.Title>
-        <Button variant="primary">Go somewhere</Button>
+        <Button variant="outline-success">Go somewhere</Button>
       </Card.Body>
+      <Card.Text>
+      Время приготовления: {reciept.time} минут
+    </Card.Text>
+    <Card.Text>
+      Количество ингредиентов: {ingridients.length}
+    </Card.Text>
 
       <Button
         variant="outline-danger"
