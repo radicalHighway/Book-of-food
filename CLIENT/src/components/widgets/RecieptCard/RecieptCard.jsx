@@ -3,12 +3,11 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import "./RecieptCard.css";
-import { useNavigate } from "react-router";
 import axiosInstance from "../../shared/lib/axiosInstance";
 
 export default function RecieptCard({ user, reciept }) {
   const [ingridients, setIngidients] = useState([]);
-  const navigate = useNavigate();
+  
 
   const favouriteHandler = async () => {
     try {
