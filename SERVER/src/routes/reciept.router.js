@@ -1,5 +1,5 @@
 const recieptRouter = require('express').Router();
-const {Reciept}= require("../db/models")
+const { Reciept } = require('../db/models');
 const RecieptController = require('../controllers/Reciept.controller');
 
 // recieptRouter.get('/', RecieptController.getAll);
@@ -7,7 +7,6 @@ const RecieptController = require('../controllers/Reciept.controller');
 recieptRouter.route('/').get(async (req, res) => {
   try {
     const reciepts = await Reciept.findAll();
-    console.log(reciepts);
 
     if (!reciepts) {
       res.status(400).send('Ошибка получения рецептов');
@@ -20,5 +19,5 @@ recieptRouter.route('/').get(async (req, res) => {
 });
 
 recieptRouter.get('/:id', RecieptController.getOne);
-
-module.exports = recieptRouter
+recieptRouter.get('/:id', RecieptController.getFavs);
+module.exports = recieptRouter;
