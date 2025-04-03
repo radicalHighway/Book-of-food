@@ -19,3 +19,24 @@
   .dropdown-button {
     margin: 20px; /* или любое другое значение отступа */
   }
+  .heart-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    padding: 10px;
+  }
+  
+  .heart {
+    color: white;
+    font-size: 50px;
+    position: relative;
+  }
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* расстояние сверху, по желанию */
+  }

@@ -1,12 +1,13 @@
 const recieptRouter = require('express').Router();
 const { Reciept } = require('../db/models');
+const { Sequelize } = require('sequelize');
 const RecieptController = require('../controllers/Reciept.controller');
 
 // recieptRouter.get('/', RecieptController.getAll);
 
 recieptRouter.route('/').get(async (req, res) => {
   try {
-    const reciepts = await Reciept.findAll();
+    const reciepts = await Reciept.findAll({ order: Sequelize.fn('RANDOM') });
 
     if (!reciepts) {
       res.status(400).send('Ошибка получения рецептов');
