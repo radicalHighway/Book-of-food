@@ -8,8 +8,11 @@ import Dropdown from "react-bootstrap/Dropdown";
 export default function MainPage({ user }) {
   const [reciepts, setReciepts] = useState([]);
 
-  // const sortTimeHenle = () =>
-
+const sortTimeHenle = (e) => {
+  e.preventDefault();
+  setReciepts(reciepts.sort((a,b) => a.time.localeCompare(b.time)))
+}
+  
   useEffect(() => {
     const getRecipts = async () => {
       const allReciepts = await axiosInstance.get("/reciepts/");
@@ -30,12 +33,8 @@ export default function MainPage({ user }) {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item href="#/action-1">
-            По времени приготовления
-          </Dropdown.Item>
-          <Dropdown.Item href="#/action-2">
-            По количеству ингридиентов
-          </Dropdown.Item>
+          <Dropdown.Item onClick={sortTimeHenle} >По увеличению времени приготовления</Dropdown.Item>
+          <Dropdown.Item href="#/action-2">По количеству ингридиентов</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 

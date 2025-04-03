@@ -28,22 +28,15 @@ export default function RecieptCard({ user, reciept }) {
 
   return (
     <>
-      <Card style={{ width: "18rem", position: "relative" }}>
-        <Card.Img variant="top" src={reciept.url} />
-        <Card.Body>
-          <Card.Title>{reciept.name} </Card.Title>
-          <Button as={Link} to={`/${reciept.id}`} variant="primary">
-            Подробнее
-          </Button>
-        </Card.Body>
-        <div style={{ margin: "0 10px" }}>
-          <i
-            className="fas fa-utensils"
-            style={{ marginRight: "5px", marginBottom: "13px" }}
-          ></i>
-          <span style={{ fontSize: "12px" }}>
-            {ingridients.length} ингредиентов
-          </span>
+    <Card style={{ width: '18rem', position: 'relative' }}>
+      <Card.Img variant="top" src={reciept.url} />
+      <Card.Body>
+        <Card.Title>{reciept.name} </Card.Title>
+        <Button as={Link} to={`/${reciept.id}`} variant="outline-success" >Подробнее</Button>
+      </Card.Body>
+      <div style={{ margin: '0 10px' }}>
+          <i className="fas fa-utensils" style={{ marginRight: '5px', marginBottom: '13px' }}></i>
+          <span style={{ fontSize: '12px' }}>{ingridients.length} ингредиентов</span>
         </div>
 
         <div
