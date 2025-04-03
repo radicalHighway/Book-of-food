@@ -21,7 +21,7 @@ export default function RecieptCard({ reciept }) {
       <Card.Img variant="top" src={reciept.url} />
       <Card.Body>
         <Card.Title>{reciept.name} </Card.Title>
-        <Button as={Link} to={`/${reciept.id}`} variant="primary" >Подробнее</Button>
+        <Button as={Link} to={`/${reciept.id}`} variant="outline-success" >Подробнее</Button>
       </Card.Body>
       <div style={{ margin: '0 10px' }}>
           <i className="fas fa-utensils" style={{ marginRight: '5px', marginBottom: '13px' }}></i>
