@@ -13,6 +13,8 @@ export default function NavigationPanel({ handleLogout, user }) {
             <Nav.Link as={Link} to="/">Главная</Nav.Link>
             {/* <Nav.Link as={Link} to="/recipes">Рецепты</Nav.Link> */}
            
+            {/* <Nav.Link as={Link} to="/recipes">Рецепты</Nav.Link> */}
+           
           </Nav>
           
           <Nav>
@@ -46,3 +48,18 @@ export default function NavigationPanel({ handleLogout, user }) {
     </Navbar>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

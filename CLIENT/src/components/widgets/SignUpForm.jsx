@@ -3,6 +3,7 @@ import axiosInstance from '../shared/lib/axiosInstance'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router';
+import { Container } from 'react-bootstrap';
 
 
 export default function SignUpForm({setUser}) {
@@ -65,7 +66,9 @@ export default function SignUpForm({setUser}) {
         })
   };
     return (
-      <Form onSubmit={signUpHandler}>
+      <Container className="d-flex justify-content-center ">
+      
+      <Form  onSubmit={signUpHandler} style={{width:'500px', marginTop: '90px'}}>
         <Form.Group className="mb-3" controlId="formBasicLogin">
           <Form.Label>Login</Form.Label>
           <Form.Control 
@@ -102,9 +105,10 @@ export default function SignUpForm({setUser}) {
           Требования: минимум 8 символов, заглавные и строчные латинские буквы
         </Form.Text>
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Добавить пользователя
+        <Button variant="primary" type="submit" >
+          Зарегистрироваться
         </Button>
       </Form>
+      </Container>
     )
   }
