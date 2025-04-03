@@ -7,7 +7,7 @@ import SignInPage from "./components/page/SigninPage";
 import { useEffect, useState } from "react";
 import axiosInstance, {
   setAccessToken,
-} from "./components/shared/lib/axiosInstance";import OneRecieptCard from "./components/widgets/OneRecieptCard"
+} from "./components/shared/lib/axiosInstance";
 import OneRecieptCard from './components/widgets/RecieptCard/OneRecieptCard/OneRecieptCard';
 import FavoritesPage from "./components/page/FavoritesPage";
 
