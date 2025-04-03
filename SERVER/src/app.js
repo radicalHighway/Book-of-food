@@ -6,6 +6,8 @@ const cors = require('cors');
 const recieptRouter = require('./routes/reciept.router');
 const authRouter = require('./routes/auth.routes');
 const tokenRouter = require('./routes/tokenRouter');
+const favoriteRoutes = require('./routes/favoriteRoutes');
+
 const app = express();
 
 app.use(morgan('dev'));
@@ -20,4 +22,6 @@ app.use('/api/auth', authRouter)
 app.use('/api/reciepts', recieptRouter);
 
 app.use('/api/tokens', tokenRouter);
+app.use('/api/favorites', favoriteRoutes)
+
 module.exports = app;

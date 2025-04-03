@@ -9,7 +9,7 @@ class RecieptService {
 
   static async getOneRecieptById(id) {
     const reciept = await Reciept.findByPk(id);
-    const result = Reciept.get({ plain: true });
+    const result = reciept.get({ plain: true });
     return result;
   }
 

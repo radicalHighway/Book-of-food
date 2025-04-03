@@ -33,11 +33,15 @@ export default function NavigationPanel({ handleLogout, user }) {
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
+              <>
               <Button variant="outline-danger" onClick={handleLogout}>
                 Выход
               </Button>
+              <Nav.Link href="/favorites">Избранное</Nav.Link>
+              </>
             )}
           </Nav>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>
