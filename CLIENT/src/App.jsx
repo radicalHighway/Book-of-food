@@ -1,3 +1,4 @@
+
 import { Route, Routes } from "react-router";
 import MainPage from "./components/page/MainPage/MainPage";
 import Layout from "./components/widgets/Layout";
@@ -9,6 +10,7 @@ import axiosInstance, {
 } from "./components/shared/lib/axiosInstance";
 import OneRecieptCard from './components/widgets/RecieptCard/OneRecieptCard/OneRecieptCard';
 import FavoritesPage from "./components/page/FavoritesPage";
+
 
 function App() {
   const [user, setUser] = useState({ status: 'logging', data: null });
@@ -35,6 +37,8 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout user={user} handleLogout={handleLogout} />}>
+
+
         <Route path="/" element={<MainPage user={user} />} />
         <Route path="/signup" element={<LoginPage setUser={setUser} />} />
         <Route path="/signin" element={<SignInPage setUser={setUser} />} />
@@ -43,6 +47,7 @@ function App() {
           path="/favorites"
           element={<FavoritesPage user={user} />}
         />
+
       </Route>
     </Routes>
   );
