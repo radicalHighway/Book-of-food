@@ -3,12 +3,10 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import "./RecieptCard.css";
-import { useNavigate } from "react-router";
 import axiosInstance from "../../shared/lib/axiosInstance";
 
-export default function RecieptCard({ user, reciept }) {
+export default function RecieptCard({ user, reciept, setReciepts }) {
   const [ingridients, setIngidients] = useState([]);
-  const navigate = useNavigate();
 
   const favouriteHandler = async () => {
     try {
@@ -26,17 +24,32 @@ export default function RecieptCard({ user, reciept }) {
     }
   }, [reciept.ingridients]);
 
+const deliteRecieptHandle = async (id) => {
+  try {
+    await axiosInstance.delete(`/reciepts/${id}`)
+    setReciepts(prevReciepts => prevReciepts.filter(r => r.id !== id));
+  } catch (error) {
+    console.log(error);
+  }
+}
+
   return (
     <>
+
     <Card style={{ width: '18rem', position: 'relative' }}>
       <Card.Img variant="top" src={reciept.url} />
       <Card.Body>
         <Card.Title>{reciept.name} </Card.Title>
         <Button as={Link} to={`/${reciept.id}`} variant="outline-success" >Подробнее</Button>
+        {user && user.data && user.data.id === reciept.user_id && (
+  <Button style={{marginLeft: '40px'}} variant="outline-warning" onClick={() => deliteRecieptHandle(reciept.id)}>
+    Удалить
+  </Button>
+)}
       </Card.Body>
       <div style={{ margin: '0 10px' }}>
           <i className="fas fa-utensils" style={{ marginRight: '5px', marginBottom: '13px' }}></i>
-          <span style={{ fontSize: '12px' }}>{ingridients.length} ингредиентов</span>
+          <span style={{ fontSize: '12px' }}> ингредиентов {ingridients.length}</span>
         </div>
 
         <div
