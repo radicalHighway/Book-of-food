@@ -14,6 +14,7 @@ import FavoritesPage from "./components/page/FavoritesPage";
 
 function App() {
   const [user, setUser] = useState({ status: 'logging', data: null });
+  
   const handleLogout = () => {
     axiosInstance
       .get('/auth/logout')
@@ -43,11 +44,7 @@ function App() {
         <Route path="/signup" element={<LoginPage setUser={setUser} />} />
         <Route path="/signin" element={<SignInPage setUser={setUser} />} />
       <Route path='/:id' element={<OneRecieptCard />} />
-        <Route
-          path="/favorites"
-          element={<FavoritesPage user={user} />}
-        />
-
+        <Route path="/favorites" element={<FavoritesPage user={user} />}/>
       </Route>
     </Routes>
   );
