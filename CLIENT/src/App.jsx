@@ -6,12 +6,37 @@ import SignInPage from "./components/page/SigninPage";
 import { useEffect, useState } from "react";
 import axiosInstance, {
   setAccessToken,
-} from "./components/shared/lib/axiosInstance";import OneRecieptCard from "./components/widgets/OneRecieptCard"
+} from "./components/shared/lib/axiosInstance";
+import OneRecieptCard from "./components/widgets/OneRecieptCard";
 
 import FavoritesPage from "./components/page/FavoritesPage";
 
 function App() {
   const [user, setUser] = useState({ status: "logging", data: null });
+  const [count, setCount] = useState(0);
+  const [favorites, setFavorites] = useState({});
+
+  const updateFavoritesCount = async () => {
+    if (user.status === "logged") {
+      try {
+        const { data } = await axiosInstance.get(
+          `/favorites/users/${user.data.id}/likes`
+        );
+        setCount(data.length);
+      } catch (error) {
+        console.error("Error updating favorites count:", error);
+      }
+    }
+  };
+
+  const countHandler = (id) => {
+    setFavorites((prev) => {
+      const newFavorites = { ...prev, [id]: !prev[id] };
+      setCount(Object.values(newFavorites).filter(Boolean).length);
+      return newFavorites;
+    });
+  };
+
   const handleLogout = () => {
     axiosInstance
       .get("/auth/logout")
@@ -34,14 +59,26 @@ function App() {
   }, []);
   return (
     <Routes>
-      <Route element={<Layout user={user} handleLogout={handleLogout} />}>
-        <Route path="/" element={<MainPage user={user} />} />
+      <Route
+        element={
+          <Layout user={user} handleLogout={handleLogout} count={count} />
+        }
+      >
+        <Route
+          path="/"
+          element={<MainPage countHandler={countHandler} user={user} />}
+        />
         <Route path="/signup" element={<LoginPage setUser={setUser} />} />
         <Route path="/signin" element={<SignInPage setUser={setUser} />} />
-      <Route path='/:id' element={<OneRecieptCard />} />
+        <Route path="/:id" element={<OneRecieptCard />} />
         <Route
           path="/favorites"
-          element={<FavoritesPage user={user} />}
+          element={
+            <FavoritesPage
+              updateFavoritesCount={updateFavoritesCount}
+              user={user}
+            />
+          }
         />
       </Route>
     </Routes>

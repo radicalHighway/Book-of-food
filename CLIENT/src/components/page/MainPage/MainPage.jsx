@@ -5,14 +5,14 @@ import axiosInstance from "../../shared/lib/axiosInstance";
 import { Row, Col } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 
-export default function MainPage({ user }) {
+export default function MainPage({ user, countHandler }) {
   const [reciepts, setReciepts] = useState([]);
 
-const sortTimeHenle = (e) => {
-  e.preventDefault();
-  setReciepts(reciepts.sort((a,b) => a.time.localeCompare(b.time)))
-}
-  
+  const sortTimeHenle = (e) => {
+    e.preventDefault();
+    setReciepts(reciepts.sort((a, b) => a.time.localeCompare(b.time)));
+  };
+
   useEffect(() => {
     const getRecipts = async () => {
       const allReciepts = await axiosInstance.get("/reciepts/");
@@ -33,15 +33,19 @@ const sortTimeHenle = (e) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item onClick={sortTimeHenle} >По увеличению времени приготовления</Dropdown.Item>
-          <Dropdown.Item href="#/action-2">По количеству ингридиентов</Dropdown.Item>
+          <Dropdown.Item onClick={sortTimeHenle}>
+            По увеличению времени приготовления
+          </Dropdown.Item>
+          <Dropdown.Item href="#/action-2">
+            По количеству ингридиентов
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
       <Row className="g-4">
         {reciepts.map((el) => (
           <Col xs={12} md={6} lg={4} key={el.id}>
-            <RecieptCard user={user} reciept={el} />
+            <RecieptCard countHandler={countHandler} user={user} reciept={el} />
           </Col>
         ))}
       </Row>
