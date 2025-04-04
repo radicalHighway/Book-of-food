@@ -4,23 +4,22 @@ import React, { useEffect, useState } from "react";
 import axiosInstance from "../../shared/lib/axiosInstance";
 import { Row, Col } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
-import Pagination from 'react-bootstrap/Pagination';
-import Button from 'react-bootstrap/Button';
+import Pagination from "react-bootstrap/Pagination";
+import Button from "react-bootstrap/Button";
 import AddRecieptForm from "../../widgets/RecieptCard/AddRecieptForm/AddRecieptForm";
 
-
-export default function MainPage({ user }) {
+export default function MainPage({ user, countHandler }) {
   const [reciepts, setReciepts] = useState([]);
-  const [sortRecipts, setSortRecipts] = useState([])
+  const [sortRecipts, setSortRecipts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(9);
-  const[show, setShow] = useState(false)
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const getRecipts = async () => {
       const allReciepts = await axiosInstance.get("/reciepts/");
       setReciepts(allReciepts.data);
-      setSortRecipts([])
+      setSortRecipts([]);
     };
     getRecipts();
   }, []);
@@ -28,57 +27,61 @@ export default function MainPage({ user }) {
   const sortTimeHenle = (e) => {
     e.preventDefault();
     const sorted = [...reciepts].sort((a, b) => {
-      const [hoursA, minutesA] = a.time.split(':').map(Number);
-      const [hoursB, minutesB] = b.time.split(':').map(Number);
+      const [hoursA, minutesA] = a.time.split(":").map(Number);
+      const [hoursB, minutesB] = b.time.split(":").map(Number);
       const totalMinutesA = hoursA * 60 + minutesA;
       const totalMinutesB = hoursB * 60 + minutesB;
       return totalMinutesA - totalMinutesB;
-    })
+    });
     setSortRecipts(sorted);
-  }
+  };
 
   const sortTimeDescendingHandle = (e) => {
     e.preventDefault();
     const sorted = [...reciepts].sort((a, b) => {
-      const [hoursA, minutesA] = a.time.split(':').map(Number);
-      const [hoursB, minutesB] = b.time.split(':').map(Number);
+      const [hoursA, minutesA] = a.time.split(":").map(Number);
+      const [hoursB, minutesB] = b.time.split(":").map(Number);
       const totalMinutesA = hoursA * 60 + minutesA;
       const totalMinutesB = hoursB * 60 + minutesB;
       return totalMinutesB - totalMinutesA;
-    })
-    setSortRecipts(sorted)
-  }
+    });
+    setSortRecipts(sorted);
+  };
 
-const sortIngridientHandle = (e) => {
-  e.preventDefault();
-  const sorted = [...reciepts].sort((a,b) => {
-    return a.ingridients.split(',').length - b.ingridients.split(',').length
-  }) 
-  setSortRecipts(sorted)
-}
+  const sortIngridientHandle = (e) => {
+    e.preventDefault();
+    const sorted = [...reciepts].sort((a, b) => {
+      return a.ingridients.split(",").length - b.ingridients.split(",").length;
+    });
+    setSortRecipts(sorted);
+  };
 
-const sortIngridientDescendingHandle = (e) => {
-  e.preventDefault();
-  const sorted = [...reciepts].sort((a,b) => {
-    return b.ingridients.split(',').length - a.ingridients.split(',').length
-  }) 
-  setSortRecipts(sorted)
-}
+  const sortIngridientDescendingHandle = (e) => {
+    e.preventDefault();
+    const sorted = [...reciepts].sort((a, b) => {
+      return b.ingridients.split(",").length - a.ingridients.split(",").length;
+    });
+    setSortRecipts(sorted);
+  };
 
-const indexOfLastReciept = currentPage * itemsPerPage;
-const indexOfFirstReciept = indexOfLastReciept - itemsPerPage;
-const currentReciepts = (sortRecipts.length > 0 ? sortRecipts : reciepts).slice(indexOfFirstReciept, indexOfLastReciept);
+  const indexOfLastReciept = currentPage * itemsPerPage;
+  const indexOfFirstReciept = indexOfLastReciept - itemsPerPage;
+  const currentReciepts = (
+    sortRecipts.length > 0 ? sortRecipts : reciepts
+  ).slice(indexOfFirstReciept, indexOfLastReciept);
 
-const totalPages = Math.ceil((sortRecipts.length > 0 ? sortRecipts : reciepts).length / itemsPerPage);
+  const totalPages = Math.ceil(
+    (sortRecipts.length > 0 ? sortRecipts : reciepts).length / itemsPerPage
+  );
 
-const handlePageChange = (pageNumber) => {
-  setCurrentPage(pageNumber);
-};
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
-const showAddFormHendler = (e) => {
-  e.preventDefault();
-  setShow((perv) => !perv)
-}
+  const showAddFormHendler = (e) => {
+    e.preventDefault();
+    setShow((perv) => !perv);
+  };
 
   return (
     <>
@@ -86,50 +89,75 @@ const showAddFormHendler = (e) => {
         <Dropdown.Toggle
           variant="success"
           id="dropdown-basic"
-          className="dropdown-button">
+          className="dropdown-button"
+        >
           Отсортировать
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item onClick={sortTimeHenle} >По увеличению времени приготовления</Dropdown.Item>
-          <Dropdown.Item onClick={sortTimeDescendingHandle} >По уменьшению времени приготовления</Dropdown.Item>
-          <Dropdown.Item onClick={sortIngridientHandle}>По увеличению количества ингридиентов</Dropdown.Item>
-          <Dropdown.Item onClick={sortIngridientDescendingHandle} >По уменьшению количества ингридиентов</Dropdown.Item>
+          <Dropdown.Item onClick={sortTimeHenle}>
+            По увеличению времени приготовления
+          </Dropdown.Item>
+          <Dropdown.Item onClick={sortTimeDescendingHandle}>
+            По уменьшению времени приготовления
+          </Dropdown.Item>
+          <Dropdown.Item onClick={sortIngridientHandle}>
+            По увеличению количества ингридиентов
+          </Dropdown.Item>
+          <Dropdown.Item onClick={sortIngridientDescendingHandle}>
+            По уменьшению количества ингридиентов
+          </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-      <Button variant="success" onClick={showAddFormHendler} >Форма добавления рецепта</Button>
-      {show && <AddRecieptForm user={user} setReciepts={setReciepts}/> }
-      <br/>
-      <br/>
+      <Button variant="success" onClick={showAddFormHendler}>
+        Форма добавления рецепта
+      </Button>
+      {show && <AddRecieptForm user={user} setReciepts={setReciepts} />}
+      <br />
+      <br />
       <Row className="g-4">
-
-
-
-      {currentReciepts.map((el) => (
+        {currentReciepts.map((el) => (
           <Col xs={12} md={6} lg={4} key={el.id}>
-            <RecieptCard setReciepts={setReciepts} user={user} reciept={el} />
+            <RecieptCard
+              setReciepts={setReciepts}
+              countHandler={countHandler}
+              user={user}
+              reciept={el}
+            />
           </Col>
         ))}
       </Row>
-      <br/>
-
+      <br />
 
       <div className="pagination-container">
-<Pagination>
-        <Pagination.First onClick={() => handlePageChange(1)} />
-        <Pagination.Prev onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
+        <Pagination>
+          <Pagination.First onClick={() => handlePageChange(1)} />
+          <Pagination.Prev
+            onClick={() =>
+              handlePageChange(currentPage > 1 ? currentPage - 1 : 1)
+            }
+          />
 
-        {[...Array(totalPages)].map((_, index) => (
-          <Pagination.Item key={index + 1} active={index + 1 === currentPage} onClick={() => handlePageChange(index + 1)}>
-            {index + 1}
-          </Pagination.Item>
-        ))}
+          {[...Array(totalPages)].map((_, index) => (
+            <Pagination.Item
+              key={index + 1}
+              active={index + 1 === currentPage}
+              onClick={() => handlePageChange(index + 1)}
+            >
+              {index + 1}
+            </Pagination.Item>
+          ))}
 
-        <Pagination.Next onClick={() => handlePageChange(currentPage < totalPages ? currentPage + 1 : totalPages)} />
-        <Pagination.Last onClick={() => handlePageChange(totalPages)} />
-      </Pagination>
+          <Pagination.Next
+            onClick={() =>
+              handlePageChange(
+                currentPage < totalPages ? currentPage + 1 : totalPages
+              )
+            }
+          />
+          <Pagination.Last onClick={() => handlePageChange(totalPages)} />
+        </Pagination>
       </div>
-
     </>
   );
 }
