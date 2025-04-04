@@ -4,11 +4,16 @@ import { Link } from "react-router-dom";
 
 export default function NavigationPanel({ handleLogout, user, count }) {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" style={{ width: "100%" }}  variant="dark" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">
           Book-of-Food
         </Navbar.Brand>
+       {user && user.data &&( <Navbar.Text
+        style={{marginRight: '60px', color: 'darkgoldenrod', opacity: '0.7'
+        }}>
+            Кулинарную книгу открыл: {user.data.name}
+          </Navbar.Text>)}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
