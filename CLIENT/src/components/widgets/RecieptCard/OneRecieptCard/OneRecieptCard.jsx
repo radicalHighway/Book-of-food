@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import axiosInstance from '../../../shared/lib/axiosInstance';
 import './OneRecieptCard.css';
 
+
 export default function OneRecieptCard() {
   const [reciept, setReciept] = useState(null);
   const { id } = useParams();
@@ -21,9 +22,9 @@ export default function OneRecieptCard() {
   }, [id]);
 
   if (!reciept) {
-    return <p className="loading">Загрузка рецепта...</p>;
-  }
-
+      return <p className="loading">Загрузка рецепта...</p>; 
+    }
+    
   return (
     <div className="recipe-card">
       {reciept.url && <img className="recipe-image" src={reciept.url} alt={reciept.name} />}

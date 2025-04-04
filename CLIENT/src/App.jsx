@@ -10,15 +10,18 @@ import axiosInstance, {
 } from "./components/shared/lib/axiosInstance";
 import OneRecieptCard from './components/widgets/RecieptCard/OneRecieptCard/OneRecieptCard';
 import FavoritesPage from "./components/page/FavoritesPage";
+import ProtectedRoute from "./components/utils/ProtectedRoute";
+import AuthRoute from "./components/utils/AuthRoute";
+import BasicExample from "./components/utils/Spinner";
 
 
 function App() {
-  const [user, setUser] = useState({ status: 'logging', data: null });
-  
+  const [user, setUser] = useState({ status: 'logging', data: null }); // не авторизован
+  const isLoading = user.status === 'logging';
   const handleLogout = () => {
     axiosInstance
       .get('/auth/logout')
-      .then(() => setUser({ status: 'guest', data: null }));
+      .then(() => setUser({ status: 'guest', data: null })); 
     setAccessToken('');
   };
 
@@ -26,7 +29,7 @@ function App() {
     axiosInstance('/tokens/refresh')
       .then(({ data }) => {
         setTimeout(() => {
-          setUser({ status: 'logged', data: data.user });
+          setUser({ status: 'logged', data: data.user }); //  авторизован
         }, 1000);
         setAccessToken(data.accessToken);
       })
@@ -36,17 +39,48 @@ function App() {
       });
   }, []);
   return (
+    <BasicExample isLoading={isLoading}>
     <Routes>
-      <Route element={<Layout user={user} handleLogout={handleLogout} />}>
-
-
-        <Route path="/" element={<MainPage user={user} />} />
-        <Route path="/signup" element={<LoginPage setUser={setUser} />} />
-        <Route path="/signin" element={<SignInPage setUser={setUser} />} />
-      <Route path='/:id' element={<OneRecieptCard />} />
-        <Route path="/favorites" element={<FavoritesPage user={user} />}/>
-      </Route>
-    </Routes>
+  <Route element={<Layout user={user} handleLogout={handleLogout} />}>
+  <Route path="/" element={<MainPage user={user} />} />
+    <Route
+     path="/signup"
+      element={
+        <AuthRoute user={user} redirectTo="/">
+<LoginPage setUser={setUser} />
+        </AuthRoute>
+      }
+       />
+    <Route 
+      path="/signin" 
+      element={
+        <AuthRoute user={user} redirectTo="/">
+          <SignInPage setUser={setUser} />
+        </AuthRoute>
+      } 
+    />
+<Route 
+  path='/:id' 
+  element={
+    <ProtectedRoute 
+    user={user}
+      redirectTo="/signin" 
+    >
+      <OneRecieptCard />
+    </ProtectedRoute>
+  } 
+/>
+    <Route 
+      path="/favorites" 
+      element={
+        <ProtectedRoute user={user} redirectTo="/signin">
+          <FavoritesPage user={user} />
+        </ProtectedRoute>
+      } 
+    />
+  </Route>
+</Routes>
+  </BasicExample>
   );
 }
 
