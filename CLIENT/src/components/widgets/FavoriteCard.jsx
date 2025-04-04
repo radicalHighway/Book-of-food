@@ -28,7 +28,7 @@ export default function FavoriteCard({
   }, [reciept.ingridients]);
   return (
     <>
-      <Card style={{ width: "18rem", position: "relative" }}>
+      <Card style={{ width: "18rem", position: "relative"}}>
         <Card.Img variant="top" src={reciept.url} />
         <Card.Body>
           <Card.Title>{reciept.name} </Card.Title>
