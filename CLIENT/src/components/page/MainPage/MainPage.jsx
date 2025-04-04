@@ -5,13 +5,17 @@ import axiosInstance from "../../shared/lib/axiosInstance";
 import { Row, Col } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import Pagination from 'react-bootstrap/Pagination';
+import Button from 'react-bootstrap/Button';
+import AddRecieptForm from "../../widgets/RecieptCard/AddRecieptForm/AddRecieptForm";
+
 
 export default function MainPage({ user }) {
   const [reciepts, setReciepts] = useState([]);
   const [sortRecipts, setSortRecipts] = useState([])
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(6);
-  
+  const [itemsPerPage] = useState(9);
+  const[show, setShow] = useState(false)
+
   useEffect(() => {
     const getRecipts = async () => {
       const allReciepts = await axiosInstance.get("/reciepts/");
@@ -71,7 +75,10 @@ const handlePageChange = (pageNumber) => {
   setCurrentPage(pageNumber);
 };
 
-
+const showAddFormHendler = (e) => {
+  e.preventDefault();
+  setShow((perv) => !perv)
+}
 
   return (
     <>
@@ -79,8 +86,7 @@ const handlePageChange = (pageNumber) => {
         <Dropdown.Toggle
           variant="success"
           id="dropdown-basic"
-          className="dropdown-button"
-        >
+          className="dropdown-button">
           Отсортировать
         </Dropdown.Toggle>
 
@@ -91,17 +97,24 @@ const handlePageChange = (pageNumber) => {
           <Dropdown.Item onClick={sortIngridientDescendingHandle} >По уменьшению количества ингридиентов</Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-
+      <Button variant="success" onClick={showAddFormHendler} >Форма добавления рецепта</Button>
+      {show && <AddRecieptForm user={user} setReciepts={setReciepts}/> }
+      <br/>
+      <br/>
       <Row className="g-4">
+
+
+
       {currentReciepts.map((el) => (
           <Col xs={12} md={6} lg={4} key={el.id}>
-            <RecieptCard user={user} reciept={el} />
+            <RecieptCard setReciepts={setReciepts} user={user} reciept={el} />
           </Col>
         ))}
       </Row>
       <br/>
-      <div className="pagination-container">
 
+
+      <div className="pagination-container">
 <Pagination>
         <Pagination.First onClick={() => handlePageChange(1)} />
         <Pagination.Prev onClick={() => handlePageChange(currentPage > 1 ? currentPage - 1 : 1)} />
