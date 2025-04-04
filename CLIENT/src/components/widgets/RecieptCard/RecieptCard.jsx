@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import "./RecieptCard.css";
-import { useNavigate } from "react-router";
 import axiosInstance from "../../shared/lib/axiosInstance";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
@@ -54,6 +53,15 @@ export default function RecieptCard({ user, reciept, countHandler }) {
       setIngidients(reciept.ingridients.split(","));
     }
   }, [reciept.ingridients]);
+
+const deliteRecieptHandle = async (id) => {
+  try {
+    await axiosInstance.delete(`/reciepts/${id}`)
+    setReciepts(prevReciepts => prevReciepts.filter(r => r.id !== id));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
   return (
     <>
