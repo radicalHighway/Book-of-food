@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./RecieptCard.css";
 import axiosInstance from "../../shared/lib/axiosInstance";
 import { FcLikePlaceholder } from "react-icons/fc";
 import { FcLike } from "react-icons/fc";
 
-export default function RecieptCard({ user, reciept, countHandler }) {
+export default function RecieptCard({
+  user,
+  reciept,
+  countHandler,
+  setReciepts,
+}) {
   const [ingridients, setIngidients] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
@@ -54,14 +59,14 @@ export default function RecieptCard({ user, reciept, countHandler }) {
     }
   }, [reciept.ingridients]);
 
-const deliteRecieptHandle = async (id) => {
-  try {
-    await axiosInstance.delete(`/reciepts/${id}`)
-    setReciepts(prevReciepts => prevReciepts.filter(r => r.id !== id));
-  } catch (error) {
-    console.log(error);
-  }
-}
+  const deliteRecieptHandle = async (id) => {
+    try {
+      await axiosInstance.delete(`/reciepts/${id}`);
+      setReciepts((prevReciepts) => prevReciepts.filter((r) => r.id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -72,6 +77,15 @@ const deliteRecieptHandle = async (id) => {
           <Button as={Link} to={`/${reciept.id}`} variant="outline-success">
             Подробнее
           </Button>
+          {user && user.data && user.data.id === reciept.user_id && (
+            <Button
+              style={{ marginLeft: "40px" }}
+              variant="outline-warning"
+              onClick={() => deliteRecieptHandle(reciept.id)}
+            >
+              Удалить
+            </Button>
+          )}
         </Card.Body>
         <div style={{ margin: "0 10px" }}>
           <i
@@ -108,7 +122,6 @@ const deliteRecieptHandle = async (id) => {
             }}
           >
             {isLiked ? <FcLike /> : <FcLikePlaceholder />}{" "}
-            {/* Используем isLiked вместо shadow */}
           </Button>
         )}
       </Card>

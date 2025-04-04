@@ -1,28 +1,34 @@
-import React from 'react';
-import { Navbar, Container, Nav, Button, Dropdown } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Navbar, Container, Nav, Button, Dropdown } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 export default function NavigationPanel({ handleLogout, user, count }) {
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">Book-of-Food</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          Book-of-Food
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">Главная</Nav.Link>
-            {user.status === "logged" && 
-          <Nav.Link as={Link} to="/favorites">Избранное</Nav.Link>
-}
+            <Nav.Link as={Link} to="/">
+              Главная
+            </Nav.Link>
+            {user.status === "logged" && (
+              <Nav.Link as={Link} to="/favorites">
+                Избранное {count}
+              </Nav.Link>
+            )}
           </Nav>
-          
+
           <Nav>
             {user.status !== "logged" ? (
               <Dropdown align="end">
                 <Dropdown.Toggle variant="outline-light" id="dropdown-auth">
                   Вход
                 </Dropdown.Toggle>
-                
+
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to="/signin">
                     Войти
@@ -34,31 +40,14 @@ export default function NavigationPanel({ handleLogout, user, count }) {
               </Dropdown>
             ) : (
               <>
-             
-              <Button variant="outline-danger" onClick={handleLogout}>
-                Выход
-              </Button>
+                <Button variant="outline-danger" onClick={handleLogout}>
+                  Выход
+                </Button>
               </>
             )}
           </Nav>
-
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
