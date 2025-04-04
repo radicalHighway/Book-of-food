@@ -7,7 +7,8 @@ import SignInPage from "./components/page/SigninPage";
 import { useEffect, useState } from "react";
 import axiosInstance, {
   setAccessToken,
-} from "./components/shared/lib/axiosInstance";import OneRecieptCard from "./components/widgets/OneRecieptCard"
+} from "./components/shared/lib/axiosInstance";
+// import OneRecieptCard from "./components/widgets/OneRecieptCard"
 import OneRecieptCard from './components/widgets/RecieptCard/OneRecieptCard/OneRecieptCard';
 import FavoritesPage from "./components/page/FavoritesPage";
 
@@ -42,7 +43,7 @@ function App() {
         <Route path="/" element={<MainPage user={user} />} />
         <Route path="/signup" element={<LoginPage setUser={setUser} />} />
         <Route path="/signin" element={<SignInPage setUser={setUser} />} />
-      <Route path='/:id' element={<OneRecieptCard />} />
+      <Route path='/:id' element={<OneRecieptCard/>} />
         <Route
           path="/favorites"
           element={<FavoritesPage user={user} />}

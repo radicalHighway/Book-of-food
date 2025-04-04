@@ -8,11 +8,9 @@ export default function NavigationPanel({ handleLogout, user }) {
   return (
     <Navbar bg="dark" data-bs-theme="dark">
       <Container>
-        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Navbar.Brand href="#home">Навигация</Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="/">Главная</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
           {user.status !== "logged" ? (
             <>
               <Nav.Link href="/signup">Регистрация</Nav.Link>
