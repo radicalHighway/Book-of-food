@@ -30,7 +30,7 @@ export default function SignInForm({setUser}) {
     })
   }
   return (
-    <Container className="d-flex justify-content-center ">
+    <Container className="d-flex justify-content-center " >
     <Form onSubmit={loginHandler} style={{width:'500px', marginTop: '90px'}}>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Email</Form.Label>
