@@ -6,11 +6,14 @@ import NavigationPanel from './NavigationPanel'
 
 export default function Layout({ handleLogout, user, count }) {
   return (
-    <Container>
-      <NavigationPanel user={user} handleLogout={handleLogout} count={count} />
+    <div className="wrapper"> 
+     <NavigationPanel user={user} handleLogout={handleLogout} count={count} />
+    <Container className="content"> 
       <Outlet />
-      <Footer />
     </Container>
+    <Footer /> 
+  </div>
+
   );
       
          

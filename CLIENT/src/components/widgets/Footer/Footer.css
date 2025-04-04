@@ -14,3 +14,14 @@
   font-family: 'Pacifico', cursive;
   font-size: 16px;
 }
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Высота окна браузера */
+}
+
+/* Контент должен расширяться, оставляя место для футера */
+.content {
+  flex: 1; /* Растягивается по высоте */
+}
