@@ -12,7 +12,9 @@ export default function NavigationPanel({ handleLogout, user }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/">Главная</Nav.Link>
-           
+            {user.status === "logged" && 
+          <Nav.Link as={Link} to="/favorites">Избранное</Nav.Link>
+}
           </Nav>
           
           <Nav>
@@ -33,10 +35,10 @@ export default function NavigationPanel({ handleLogout, user }) {
               </Dropdown>
             ) : (
               <>
+             
               <Button variant="outline-danger" onClick={handleLogout}>
                 Выход
               </Button>
-              <Nav.Link href="/favorites">Избранное</Nav.Link>
               </>
             )}
           </Nav>

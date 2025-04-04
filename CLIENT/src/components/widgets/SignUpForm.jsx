@@ -54,7 +54,7 @@ export default function SignUpForm({setUser}) {
                   error.response.data.message === 'User already exists') {
                 alert('Пользователь с таким email уже зарегистрирован');
               } else {
-                alert(error.response.data.error || 'Ошибка при регистрации');
+                alert(error.response.data.error || 'Введите допустимый адрес электронной почты. Например xxxx@gmail.com');
               }
             } else if (error.response.status === 500) {
               alert('Ошибка сервера. Попробуйте позже');
